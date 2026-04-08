@@ -42,11 +42,8 @@ NAV = {
 }
 
 # ── Session state — respect share-link routing on first load ─────────────────
-# If the URL contains ?current_page=store_proposal (set by the HTML share link),
-# navigate directly to that page instead of showing the home screen.
 if "current_page" not in st.session_state:
     page_from_url = st.query_params.get("current_page", "_home")
-    # Validate it's a real page key to prevent unexpected behaviour
     all_keys = [k for pages in NAV.values() for k in pages]
     st.session_state.current_page = page_from_url if page_from_url in all_keys else "_home"
 
@@ -100,25 +97,6 @@ if current == "_home":
             f"""<p style="font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:#bbb;margin:0 0 0.6rem;border-top:1px solid #d8d8d8;padding-top:1.1rem;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;">{dept_label}</p>""",
             unsafe_allow_html=True,
         )
-
-        cols_css = "1fr " * min(n, 3)
-        cards_inner = ""
-        for i, (page_key, page_info) in enumerate(items):
-            is_last_in_row = (i % 3 == 2) or (i == n - 1)
-            right_border = "" if is_last_in_row else "border-right:1px solid #d8d8d8;"
-            cards_inner += f"""
-            <div style="padding:1.1rem 1rem 1.1rem;background:#f7f7f7;{right_border}">
-                <p style="font-size:0.875rem;font-weight:400;color:#1a1a1a;margin:0 0 1rem;letter-spacing:0.01em;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;">{page_info['label']}</p>
-                <span style="font-size:0.62rem;letter-spacing:0.16em;text-transform:uppercase;color:#1a1a1a;border-bottom:1px solid #1a1a1a;padding-bottom:1px;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;">Open</span>
-            </div>
-            """
-
-        card_html = f"""
-        <div style="display:grid;grid-template-columns:{cols_css};border:1px solid #d8d8d8;margin-bottom:2px;">
-            {cards_inner}
-        </div>
-        """
-        components.html(card_html, height=110 if n <= 3 else 220, scrolling=False)
 
         btn_cols = st.columns(min(n, 3))
         for i, (page_key, page_info) in enumerate(items):
