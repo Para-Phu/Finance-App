@@ -29,7 +29,7 @@ def render():
         headers  = dict(st.context.headers)
         host     = headers.get("host", "").split(",")[0].strip()
         is_https = "streamlit.app" in host or headers.get("x-forwarded-proto", "") == "https"
-        base_url = f"{'https' if is_https else 'http'}://{host}"
+        base_url = f"{'https' if is_https else 'http'}://{host}" if host else "https://finance-app-para-commercial.streamlit.app"
     except Exception:
         base_url = "https://finance-app-para-commercial.streamlit.app"
 
