@@ -543,7 +543,7 @@ function runAnalysis() {
       }).join('')
     + '</tbody></table></div>';
 
-  document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  try { window.parent.scrollTo({ top: 0, behavior: 'smooth' }); } catch(e) {}
 }
 
 // ─── SHARE MODAL ──────────────────────────────────────────────────────────────
