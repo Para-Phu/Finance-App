@@ -1,15 +1,13 @@
 /* shared/style.css
    ─────────────────────────────────────────────────────────────────────────────
-   Greyscale minimalist theme — Aesop/editorial inspired
-   Injected globally via app.py — applies to every app in the portfolio.
-
+   Cool greyscale minimalist theme
    Palette:
-     bg-main:     #f5f4f2   warm off-white canvas
-     bg-sidebar:  #eceae6   slightly darker warm grey sidebar
-     border:      #d6d3cd   warm mid-grey rules
-     text-primary:#1a1916   near-black
-     text-muted:  #8c8983   warm mid-grey labels
-     text-faint:  #b5b2ac   faint labels / captions
+     #f7f7f7  canvas
+     #efefef  sidebar
+     #d8d8d8  borders
+     #1a1a1a  text primary
+     #888      text muted
+     #bbb      text faint
 */
 
 /* ── Reset ───────────────────────────────────────────────────────────────── */
@@ -17,224 +15,254 @@ html, body, [class*="css"] {
     font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif !important;
 }
 
-/* ── Main canvas ─────────────────────────────────────────────────────────── */
-.stApp {
-    background-color: #f5f4f2 !important;
+/* ── Canvas ──────────────────────────────────────────────────────────────── */
+.stApp, .stApp > * {
+    background-color: #f7f7f7 !important;
 }
 
 .main .block-container {
     padding-top: 3.5rem;
     padding-bottom: 4rem;
-    max-width: 920px;
+    max-width: 900px;
+    background-color: #f7f7f7 !important;
 }
 
 /* ── Sidebar ─────────────────────────────────────────────────────────────── */
 [data-testid="stSidebar"] {
-    background-color: #eceae6 !important;
-    border-right: 1px solid #d6d3cd !important;
+    background-color: #efefef !important;
+    border-right: 1px solid #d8d8d8 !important;
 }
 
+/* Kill Streamlit's default sidebar padding so we control it */
+[data-testid="stSidebar"] > div:first-child {
+    padding: 2rem 1rem 1.5rem !important;
+}
+
+/* Sidebar title */
 [data-testid="stSidebar"] .stMarkdown p {
-    font-size: 0.65rem !important;
-    font-weight: 400 !important;
+    font-size: 0.6rem !important;
     letter-spacing: 0.16em !important;
     text-transform: uppercase !important;
-    color: #8c8983 !important;
-    margin: 0 !important;
-}
-
-/* Department section labels */
-[data-testid="stSidebar"] .stMarkdown strong {
-    font-size: 0.6rem !important;
+    color: #888 !important;
     font-weight: 400 !important;
-    letter-spacing: 0.18em !important;
-    text-transform: uppercase !important;
-    color: #b5b2ac !important;
-    display: block;
-    padding: 0.9rem 0.75rem 0.2rem;
+    margin: 0 !important;
+    text-align: left !important;
 }
 
-[data-testid="stSidebar"] .stCaption,
-[data-testid="stSidebar"] [data-testid="stCaptionContainer"] p {
-    font-size: 0.6rem !important;
-    letter-spacing: 0.12em !important;
+/* Department labels */
+[data-testid="stSidebar"] .stMarkdown strong {
+    font-size: 0.58rem !important;
+    letter-spacing: 0.2em !important;
     text-transform: uppercase !important;
-    color: #b5b2ac !important;
+    color: #bbb !important;
+    font-weight: 400 !important;
+    display: block !important;
+    padding: 1rem 0 0.25rem !important;
+    text-align: left !important;
 }
 
 [data-testid="stSidebar"] hr {
-    border-color: #d6d3cd !important;
-    margin: 0.6rem 0 !important;
+    border: none !important;
+    border-top: 1px solid #d8d8d8 !important;
+    margin: 0.75rem 0 !important;
 }
 
-/* Sidebar nav buttons — left-aligned, no border, no radius */
+[data-testid="stSidebar"] .stCaption p,
+[data-testid="stSidebar"] [data-testid="stCaptionContainer"] p {
+    font-size: 0.58rem !important;
+    letter-spacing: 0.14em !important;
+    text-transform: uppercase !important;
+    color: #bbb !important;
+    text-align: left !important;
+}
+
+/* ── Sidebar buttons — force left align ──────────────────────────────────── */
+[data-testid="stSidebar"] .stButton,
+[data-testid="stSidebar"] .stButton > button {
+    width: 100% !important;
+    display: block !important;
+    text-align: left !important;
+}
+
 [data-testid="stSidebar"] .stButton > button {
     background: transparent !important;
     border: none !important;
-    border-radius: 0 !important;
     border-bottom: none !important;
+    border-radius: 0 !important;
     box-shadow: none !important;
-    color: #5a5855 !important;
-    text-align: left !important;
+    color: #555 !important;
     font-size: 0.8rem !important;
     font-weight: 400 !important;
     letter-spacing: 0.01em !important;
     text-transform: none !important;
-    padding: 0.3rem 0.75rem !important;
-    width: 100% !important;
+    padding: 0.28rem 0.25rem !important;
     height: auto !important;
     min-height: unset !important;
     justify-content: flex-start !important;
-    transition: color 0.15s !important;
+    transition: color 0.12s !important;
+}
+
+/* Force the inner span/p to align left */
+[data-testid="stSidebar"] .stButton > button > div,
+[data-testid="stSidebar"] .stButton > button p {
+    text-align: left !important;
+    justify-content: flex-start !important;
 }
 
 [data-testid="stSidebar"] .stButton > button:hover {
+    color: #1a1a1a !important;
     background: rgba(0,0,0,0.04) !important;
-    color: #1a1916 !important;
     opacity: 1 !important;
+    border-bottom: none !important;
 }
 
 [data-testid="stSidebar"] .stButton > button[kind="secondary"] {
-    color: #1a1916 !important;
+    color: #1a1a1a !important;
     background: rgba(0,0,0,0.06) !important;
 }
 
 /* ── Typography ──────────────────────────────────────────────────────────── */
+h1, h2, h3, h4 {
+    color: #1a1a1a !important;
+}
+
 h1 {
-    font-size: 1.6rem !important;
+    font-size: 1.5rem !important;
     font-weight: 400 !important;
-    letter-spacing: 0.05em !important;
+    letter-spacing: 0.06em !important;
     text-transform: uppercase !important;
-    color: #1a1916 !important;
     line-height: 1.2 !important;
 }
 
 h2 {
-    font-size: 0.62rem !important;
+    font-size: 0.58rem !important;
     font-weight: 400 !important;
-    letter-spacing: 0.18em !important;
+    letter-spacing: 0.2em !important;
     text-transform: uppercase !important;
-    color: #b5b2ac !important;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
+    color: #bbb !important;
 }
 
 h3 {
     font-size: 0.875rem !important;
     font-weight: 400 !important;
-    letter-spacing: 0.01em !important;
-    color: #1a1916 !important;
 }
 
 p, .stMarkdown p {
-    font-size: 0.875rem;
-    line-height: 1.75;
-    color: #3d3b38;
+    font-size: 0.875rem !important;
+    line-height: 1.75 !important;
+    color: #444 !important;
 }
 
-/* ── Cards — force sharp corners ─────────────────────────────────────────── */
+/* ── Streamlit containers — nuke all rounding ────────────────────────────── */
 [data-testid="stVerticalBlockBorderWrapper"],
 [data-testid="stVerticalBlockBorderWrapper"] > div,
-[data-testid="stVerticalBlockBorderWrapper"] > div > div {
+[data-testid="stVerticalBlockBorderWrapper"] > div > div,
+[data-testid="stVerticalBlockBorderWrapper"] > div > div > div {
     border-radius: 0 !important;
     -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
 }
 
 [data-testid="stVerticalBlockBorderWrapper"] {
-    border-color: #d6d3cd !important;
-    background-color: #f5f4f2 !important;
-    transition: border-color 0.2s;
+    border-color: #d8d8d8 !important;
+    background: #f7f7f7 !important;
+    box-shadow: none !important;
+    transition: border-color 0.2s !important;
 }
 
 [data-testid="stVerticalBlockBorderWrapper"]:hover {
-    border-color: #9e9b96 !important;
+    border-color: #999 !important;
     box-shadow: none !important;
 }
 
-/* ── Buttons — underline link style ─────────────────────────────────────── */
-.stButton > button {
+/* ── Main area buttons — underline style ─────────────────────────────────── */
+.main .stButton > button,
+.block-container .stButton > button {
     background: transparent !important;
     border: none !important;
     border-radius: 0 !important;
-    border-bottom: 1px solid #1a1916 !important;
+    border-bottom: 1px solid #1a1a1a !important;
     box-shadow: none !important;
-    color: #1a1916 !important;
-    font-size: 0.65rem !important;
+    color: #1a1a1a !important;
+    font-size: 0.62rem !important;
     font-weight: 400 !important;
-    letter-spacing: 0.14em !important;
+    letter-spacing: 0.16em !important;
     text-transform: uppercase !important;
-    padding: 0 0 2px 0 !important;
+    padding: 0 0 2px !important;
     height: auto !important;
     min-height: unset !important;
-    line-height: 1.4 !important;
     transition: opacity 0.15s !important;
 }
 
-.stButton > button:hover {
-    opacity: 0.45 !important;
+.main .stButton > button:hover,
+.block-container .stButton > button:hover {
+    opacity: 0.4 !important;
     background: transparent !important;
-    color: #1a1916 !important;
-    border-bottom: 1px solid #1a1916 !important;
+    border-bottom: 1px solid #1a1a1a !important;
+    color: #1a1a1a !important;
 }
 
-/* ── Metric cards ────────────────────────────────────────────────────────── */
+/* ── Metrics ─────────────────────────────────────────────────────────────── */
 [data-testid="stMetric"] {
-    background: transparent;
-    border-radius: 0;
-    padding: 1rem 0;
-    border: none;
-    border-top: 1px solid #d6d3cd;
+    background: transparent !important;
+    border-radius: 0 !important;
+    padding: 1rem 0 !important;
+    border: none !important;
+    border-top: 1px solid #d8d8d8 !important;
+    box-shadow: none !important;
 }
 
 [data-testid="stMetricLabel"] p {
-    font-size: 0.62rem !important;
+    font-size: 0.6rem !important;
     letter-spacing: 0.14em !important;
     text-transform: uppercase !important;
-    color: #8c8983 !important;
+    color: #888 !important;
 }
 
 [data-testid="stMetricValue"] {
     font-size: 1.5rem !important;
     font-weight: 400 !important;
-    color: #1a1916 !important;
+    color: #1a1a1a !important;
 }
 
 /* ── Dataframes ──────────────────────────────────────────────────────────── */
 [data-testid="stDataFrame"] {
     border-radius: 0 !important;
-    overflow: hidden;
+    border: 1px solid #d8d8d8 !important;
+    overflow: hidden !important;
 }
 
 /* ── Dividers ────────────────────────────────────────────────────────────── */
 hr {
-    border-color: #d6d3cd !important;
+    border: none !important;
+    border-top: 1px solid #d8d8d8 !important;
     margin: 1.5rem 0 !important;
 }
 
 /* ── Captions ────────────────────────────────────────────────────────────── */
-.stCaption,
+.stCaption p,
 [data-testid="stCaptionContainer"] p {
-    font-size: 0.62rem !important;
-    letter-spacing: 0.12em !important;
+    font-size: 0.6rem !important;
+    letter-spacing: 0.14em !important;
     text-transform: uppercase !important;
-    color: #8c8983 !important;
+    color: #888 !important;
 }
 
 /* ── Inputs ──────────────────────────────────────────────────────────────── */
+input, textarea, select,
 .stTextInput input,
-.stSelectbox select,
-.stNumberInput input,
-textarea {
+.stNumberInput input {
     border-radius: 0 !important;
-    border-color: #d6d3cd !important;
-    background: #f5f4f2 !important;
+    border-color: #d8d8d8 !important;
+    background: #f7f7f7 !important;
+    color: #1a1a1a !important;
     font-size: 0.875rem !important;
-    color: #1a1916 !important;
 }
 
 /* ── Tabs ────────────────────────────────────────────────────────────────── */
 .stTabs [data-baseweb="tab"] {
-    font-size: 0.65rem !important;
-    letter-spacing: 0.14em !important;
+    font-size: 0.62rem !important;
+    letter-spacing: 0.16em !important;
     text-transform: uppercase !important;
+    font-weight: 400 !important;
 }
