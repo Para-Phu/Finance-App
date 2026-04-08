@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as components
 import importlib
 import sys
 import os
@@ -70,37 +71,16 @@ current = st.session_state.current_page
 if current == "_home":
 
     # Hero
-    st.markdown("""
-        <div style="
-            border-top: 1px solid #1a1a1a;
-            padding-top: 1.75rem;
-            margin-bottom: 2.75rem;
-        ">
-            <p style="
-                font-size: 0.58rem;
-                letter-spacing: 0.2em;
-                text-transform: uppercase;
-                color: #bbb;
-                margin: 0 0 0.5rem;
-            ">App Portfolio</p>
-            <p style="
-                font-size: 1.5rem;
-                font-weight: 400;
-                letter-spacing: 0.06em;
-                text-transform: uppercase;
-                color: #1a1a1a;
-                margin: 0 0 0.65rem;
-                line-height: 1.15;
-            ">Internal Tools</p>
-            <p style="
-                font-size: 0.82rem;
-                color: #888;
-                margin: 0;
-                max-width: 400px;
-                line-height: 1.75;
-            ">A collection of tools for finance, operations, marketing, and property.</p>
+    st.markdown(
+        """
+        <div style="border-top:1px solid #1a1a1a;padding-top:1.75rem;margin-bottom:2.75rem;">
+            <p style="font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:#bbb;margin:0 0 0.5rem;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;">App Portfolio</p>
+            <p style="font-size:1.5rem;font-weight:400;letter-spacing:0.06em;text-transform:uppercase;color:#1a1a1a;margin:0 0 0.65rem;line-height:1.15;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;">Internal Tools</p>
+            <p style="font-size:0.82rem;color:#888;margin:0;max-width:400px;line-height:1.75;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;">A collection of tools for finance, operations, marketing, and property.</p>
         </div>
-    """, unsafe_allow_html=True)
+        """,
+        unsafe_allow_html=True,
+    )
 
     # Department sections
     for dept_label, pages in NAV.items():
@@ -108,76 +88,45 @@ if current == "_home":
             continue
 
         items = list(pages.items())
+        n = len(items)
 
         # Department label
-        st.markdown(f"""
-            <p style="
-                font-size: 0.58rem;
-                letter-spacing: 0.2em;
-                text-transform: uppercase;
-                color: #bbb;
-                margin: 0 0 0.6rem;
-                border-top: 1px solid #d8d8d8;
-                padding-top: 1.1rem;
-            ">{dept_label}</p>
-        """, unsafe_allow_html=True)
+        st.markdown(
+            f"""<p style="font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:#bbb;margin:0 0 0.6rem;border-top:1px solid #d8d8d8;padding-top:1.1rem;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;">{dept_label}</p>""",
+            unsafe_allow_html=True,
+        )
 
-        # Cards: rendered as HTML grid so border-radius is fully controlled,
-        # with a hidden Streamlit button wired up per card via a unique key.
-        # The HTML card is purely visual; the real click target is the st.button
-        # rendered just below (hidden visually via CSS zero-height wrapper).
-
-        # Build the HTML card grid
-        card_html = """
-        <div style="
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0;
-            border: 1px solid #d8d8d8;
-            margin-bottom: 0.1rem;
-        ">
-        """
+        # Build card grid as a self-contained HTML component
+        # Cards are visual only — real navigation uses st.button below
+        cols_css = "1fr " * min(n, 3)
+        cards_inner = ""
         for i, (page_key, page_info) in enumerate(items):
-            border_right = "border-right: 1px solid #d8d8d8;" if (i % 3) < 2 and i < len(items) - 1 else ""
-            card_html += f"""
-            <div style="
-                padding: 1.1rem 1rem 1rem;
-                background: #f7f7f7;
-                {border_right}
-            ">
-                <p style="
-                    font-size: 0.875rem;
-                    font-weight: 400;
-                    color: #1a1a1a;
-                    margin: 0 0 1rem;
-                    letter-spacing: 0.01em;
-                ">{page_info['label']}</p>
-                <p style="
-                    font-size: 0.62rem;
-                    letter-spacing: 0.16em;
-                    text-transform: uppercase;
-                    color: #1a1a1a;
-                    margin: 0;
-                    border-bottom: 1px solid #1a1a1a;
-                    display: inline-block;
-                    padding-bottom: 1px;
-                    cursor: pointer;
-                ">Open</p>
+            is_last_in_row = (i % 3 == 2) or (i == n - 1)
+            right_border = "" if is_last_in_row else "border-right:1px solid #d8d8d8;"
+            cards_inner += f"""
+            <div style="padding:1.1rem 1rem 1.1rem;background:#f7f7f7;{right_border}">
+                <p style="font-size:0.875rem;font-weight:400;color:#1a1a1a;margin:0 0 1rem;letter-spacing:0.01em;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;">{page_info['label']}</p>
+                <span style="font-size:0.62rem;letter-spacing:0.16em;text-transform:uppercase;color:#1a1a1a;border-bottom:1px solid #1a1a1a;padding-bottom:1px;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;">Open</span>
             </div>
             """
-        card_html += "</div>"
-        st.markdown(card_html, unsafe_allow_html=True)
 
-        # Real buttons (invisible — CSS hides them, logic still works via sidebar)
-        # We use visible buttons in a tight row so users can actually click
-        cols = st.columns(len(items)) if len(items) > 0 else []
+        card_html = f"""
+        <div style="display:grid;grid-template-columns:{cols_css};border:1px solid #d8d8d8;margin-bottom:2px;">
+            {cards_inner}
+        </div>
+        """
+        components.html(card_html, height=110 if n <= 3 else 220, scrolling=False)
+
+        # Actual clickable buttons below the visual cards
+        # Styled small and understated so they act as a fallback click target
+        btn_cols = st.columns(min(n, 3))
         for i, (page_key, page_info) in enumerate(items):
-            with cols[i] if isinstance(cols, list) and len(cols) > i else st.container():
-                if st.button(f"↗ {page_info['label']}", key=f"home_{page_key}"):
+            with btn_cols[i % 3]:
+                if st.button(page_info["label"], key=f"home_{page_key}"):
                     st.session_state.current_page = page_key
                     st.rerun()
 
-        st.markdown("<div style='margin-bottom:1.25rem'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='margin-bottom:1rem'></div>", unsafe_allow_html=True)
 
 else:
     # ── Dynamic loader ────────────────────────────────────────────────────────
