@@ -6,7 +6,7 @@ import os
 # ── Page config (must be first Streamlit call) ──────────────────────────────
 st.set_page_config(
     page_title="App Portfolio",
-    page_icon="🗂️",
+    page_icon=None,
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -26,17 +26,17 @@ NAV = {
         "_home": {"label": "Overview", "module": None}
     },
     "Finance": {
-        "budget_tool":  {"label": "Budget Tool",       "module": "departments.finance.budget_tool"},
-        "forecast":     {"label": "Forecast",           "module": "departments.finance.forecast"},
+        "budget_tool":    {"label": "Budget Tool",       "module": "departments.finance.budget_tool"},
+        "forecast":       {"label": "Forecast",          "module": "departments.finance.forecast"},
     },
     "Operations": {
-        "logistics":    {"label": "Logistics Tracker",  "module": "departments.ops.logistics"},
+        "logistics":      {"label": "Logistics Tracker", "module": "departments.ops.logistics"},
     },
     "Marketing": {
-        "dashboard":    {"label": "Campaign Dashboard", "module": "departments.marketing.dashboard"},
+        "dashboard":      {"label": "Campaign Dashboard","module": "departments.marketing.dashboard"},
     },
     "Property": {
-        "store_proposal": {"label": "New Store Proposal", "module": "departments.property.store_proposal"},
+        "store_proposal": {"label": "New Store Proposal","module": "departments.property.store_proposal"},
     },
 }
 
@@ -44,7 +44,7 @@ NAV = {
 if "current_page" not in st.session_state:
     st.session_state.current_page = "_home"
 
-# ── Sidebar nav ──────────────────────────────────────────────────────────────
+# ── Sidebar ──────────────────────────────────────────────────────────────────
 with st.sidebar:
     st.markdown("App Portfolio")
     st.markdown("---")
@@ -53,13 +53,11 @@ with st.sidebar:
         st.markdown(f"**{dept_label}**")
         for page_key, page_info in pages.items():
             active = st.session_state.current_page == page_key
-            btn_label = page_info["label"]
-            btn_type = "secondary" if active else "tertiary"
             if st.button(
-                btn_label,
+                page_info["label"],
                 key=f"nav_{page_key}",
                 use_container_width=True,
-                type=btn_type,
+                type="secondary" if active else "tertiary",
             ):
                 st.session_state.current_page = page_key
                 st.rerun()
@@ -72,62 +70,61 @@ current = st.session_state.current_page
 
 if current == "_home":
 
-    # ── Hero rule + title ────────────────────────────────────────────────────
+    # Hero — ruled line, eyebrow, title, subtitle
     st.markdown(
         """
-        <div style="
-            border-top: 1px solid currentColor;
-            padding-top: 1.5rem;
-            margin-bottom: 2.5rem;
-        ">
+        <div style="border-top: 1px solid #1a1916; padding-top: 1.75rem; margin-bottom: 3rem;">
             <p style="
-                font-size: 0.7rem;
-                letter-spacing: 0.14em;
+                font-size: 0.6rem;
+                letter-spacing: 0.18em;
                 text-transform: uppercase;
-                opacity: 0.5;
-                margin: 0 0 0.4rem;
-            ">App Portfolio</p>
-            <h1 style="
-                font-size: 1.3rem !important;
-                font-weight: 400 !important;
-                letter-spacing: 0.06em !important;
-                text-transform: uppercase;
+                color: #b5b2ac;
                 margin: 0 0 0.6rem;
-            ">Internal Tools</h1>
+            ">App Portfolio</p>
             <p style="
-                font-size: 0.85rem;
-                opacity: 0.55;
+                font-size: 1.55rem;
+                font-weight: 400;
+                letter-spacing: 0.05em;
+                text-transform: uppercase;
+                color: #1a1916;
+                margin: 0 0 0.75rem;
+                line-height: 1.15;
+            ">Internal Tools</p>
+            <p style="
+                font-size: 0.82rem;
+                color: #8c8983;
                 margin: 0;
-                max-width: 420px;
-                line-height: 1.7;
+                max-width: 400px;
+                line-height: 1.75;
+                letter-spacing: 0.01em;
             ">A collection of tools for finance, operations, marketing, and property.</p>
         </div>
         """,
         unsafe_allow_html=True,
     )
 
-    # ── Department sections ──────────────────────────────────────────────────
+    # Department sections
     for dept_label, pages in NAV.items():
         if dept_label == "Home":
             continue
 
-        # Department label
+        # Department rule + label
         st.markdown(
             f"""
             <p style="
-                font-size: 0.65rem;
-                letter-spacing: 0.14em;
+                font-size: 0.6rem;
+                letter-spacing: 0.18em;
                 text-transform: uppercase;
-                opacity: 0.45;
-                margin: 0 0 0;
-                border-top: 0.5px solid rgba(128,128,128,0.25);
+                color: #b5b2ac;
+                margin: 0 0 0.6rem;
+                border-top: 1px solid #d6d3cd;
                 padding-top: 1.25rem;
             ">{dept_label}</p>
             """,
             unsafe_allow_html=True,
         )
 
-        # Tool grid — 3 columns
+        # 3-column tool grid
         cols = st.columns(3, gap="small")
         for i, (page_key, page_info) in enumerate(pages.items()):
             with cols[i % 3]:
@@ -136,8 +133,10 @@ if current == "_home":
                         f"""
                         <p style="
                             font-size: 0.875rem;
-                            margin: 0 0 0.75rem;
                             font-weight: 400;
+                            color: #1a1916;
+                            margin: 0 0 1rem;
+                            letter-spacing: 0.01em;
                         ">{page_info['label']}</p>
                         """,
                         unsafe_allow_html=True,
@@ -146,7 +145,10 @@ if current == "_home":
                         st.session_state.current_page = page_key
                         st.rerun()
 
-        st.markdown("<div style='margin-bottom: 1.5rem;'></div>", unsafe_allow_html=True)
+        st.markdown(
+            "<div style='margin-bottom: 1.25rem;'></div>",
+            unsafe_allow_html=True,
+        )
 
 else:
     # ── Dynamic page loader ───────────────────────────────────────────────────
@@ -177,7 +179,7 @@ else:
             st.warning(
                 f"Module `{module_path}` not found yet. "
                 "Create the file to activate this page.",
-                icon="🚧"
+                icon="🚧",
             )
         except Exception as e:
             st.exception(e)
