@@ -1,94 +1,160 @@
 /* shared/style.css
    ─────────────────
+   Concept B — Minimal sans (Aesop-inspired)
    Injected globally via app.py — applies to every app in the portfolio.
-   Edit this file to change the look across all apps at once.
 */
+
+/* ── Global typography ────────────────────────────────────────────────────── */
+html, body, [class*="css"] {
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif !important;
+    letter-spacing: 0.01em;
+}
+
+/* ── Main content area ────────────────────────────────────────────────────── */
+.main .block-container {
+    padding-top: 3rem;
+    max-width: 960px;
+}
+
+/* ── Typography ───────────────────────────────────────────────────────────── */
+h1 {
+    font-size: 1.1rem !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase;
+}
+
+h2 {
+    font-size: 0.7rem !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.14em !important;
+    text-transform: uppercase;
+    color: rgba(128, 128, 128, 0.8) !important;
+    margin-top: 2rem !important;
+}
+
+h3 {
+    font-size: 0.875rem !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.01em !important;
+}
+
+p, .stMarkdown p {
+    font-size: 0.875rem;
+    line-height: 1.7;
+}
 
 /* ── Sidebar ──────────────────────────────────────────────────────────────── */
 [data-testid="stSidebar"] {
     background-color: #0f1117;
+    border-right: none;
 }
 
 [data-testid="stSidebar"] .stMarkdown p,
-[data-testid="stSidebar"] .stMarkdown strong,
+[data-testid="stSidebar"] .stMarkdown strong {
+    font-size: 0.7rem !important;
+    letter-spacing: 0.14em !important;
+    text-transform: uppercase !important;
+    color: #444 !important;
+    font-weight: 400 !important;
+}
+
 [data-testid="stSidebar"] .stCaption {
-    color: #c8cdd8 !important;
+    color: #333 !important;
+    font-size: 0.7rem !important;
 }
 
 /* Sidebar nav buttons */
 [data-testid="stSidebar"] .stButton > button {
     background: transparent;
     border: none;
-    color: #c8cdd8;
+    color: #777;
     text-align: left;
-    font-size: 0.875rem;
+    font-size: 0.8rem;
+    font-family: inherit;
+    letter-spacing: 0.01em;
     padding: 0.3rem 0.75rem;
-    border-radius: 6px;
-    transition: background 0.15s, color 0.15s;
+    border-radius: 0;
+    transition: color 0.15s;
+    width: 100%;
 }
 
 [data-testid="stSidebar"] .stButton > button:hover {
+    background: rgba(255,255,255,0.04);
+    color: #fff;
+}
+
+/* Active page button */
+[data-testid="stSidebar"] .stButton > button[kind="secondary"] {
+    color: #fff;
     background: rgba(255,255,255,0.07);
-    color: #ffffff;
 }
 
-/* Active page button (starts with ▶) */
-[data-testid="stSidebar"] .stButton > button[kind="secondary"]:first-line {
-    color: #ffffff;
+/* Sidebar divider */
+[data-testid="stSidebar"] hr {
+    border-color: #1e1e1e !important;
+    margin: 0.75rem 0 !important;
 }
 
-/* ── Main content area ────────────────────────────────────────────────────── */
-.main .block-container {
-    padding-top: 2rem;
-    max-width: 1100px;
-}
-
-/* ── Typography ───────────────────────────────────────────────────────────── */
-h1 {
-    font-size: 1.75rem !important;
-    font-weight: 700 !important;
-    letter-spacing: -0.02em;
-}
-
-h2, h3 {
-    font-weight: 600 !important;
-    letter-spacing: -0.01em;
-}
-
-/* ── Cards (st.container with border=True) ────────────────────────────────── */
+/* ── Cards — override Streamlit's rounded border style ───────────────────── */
 [data-testid="stVerticalBlockBorderWrapper"] {
-    border-radius: 10px !important;
+    border-radius: 0 !important;
     border-color: rgba(128, 128, 128, 0.2) !important;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: border-color 0.2s;
 }
 
 [data-testid="stVerticalBlockBorderWrapper"]:hover {
-    border-color: rgba(128, 128, 128, 0.45) !important;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    border-color: rgba(128, 128, 128, 0.5) !important;
+    box-shadow: none !important;
 }
 
 /* ── Buttons ─────────────────────────────────────────────────────────────── */
-.stButton > button[kind="primary"] {
-    border-radius: 8px;
-    font-weight: 600;
+.stButton > button[kind="primary"],
+.stButton > button[kind="secondary"] {
+    border-radius: 0 !important;
+    font-size: 0.7rem !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    border: none !important;
+    background: transparent !important;
+    padding: 0 0 1px 0 !important;
+    color: inherit !important;
+    border-bottom: 1px solid currentColor !important;
+    height: auto !important;
+    min-height: unset !important;
+}
+
+.stButton > button:hover {
+    opacity: 0.6 !important;
+    background: transparent !important;
 }
 
 /* ── Metric cards ─────────────────────────────────────────────────────────── */
 [data-testid="stMetric"] {
-    background: rgba(128,128,128,0.05);
-    border-radius: 10px;
-    padding: 1rem;
-    border: 1px solid rgba(128,128,128,0.12);
+    background: transparent;
+    border-radius: 0;
+    padding: 1rem 0;
+    border: none;
+    border-top: 1px solid rgba(128,128,128,0.2);
 }
 
 /* ── Dataframes ───────────────────────────────────────────────────────────── */
 [data-testid="stDataFrame"] {
-    border-radius: 8px;
+    border-radius: 0;
     overflow: hidden;
 }
 
 /* ── Dividers ─────────────────────────────────────────────────────────────── */
 hr {
     border-color: rgba(128,128,128,0.15) !important;
-    margin: 1.25rem 0 !important;
+    margin: 1.5rem 0 !important;
+}
+
+/* ── Caption / label text ─────────────────────────────────────────────────── */
+.stCaption, [data-testid="stCaptionContainer"] p {
+    font-size: 0.7rem !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    color: rgba(128,128,128,0.7) !important;
 }
