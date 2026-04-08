@@ -221,11 +221,8 @@ function loadFromURL(){
 function buildShareURL(){
   var p=new URLSearchParams();
   KEYS.forEach(function(k){var el=document.getElementById(k);if(el)p.set(k,el.value);});
-  // When running inside a Streamlit iframe, window.location is a sandboxed blob URL.
-  // Use document.referrer (the Streamlit app URL) as the base instead.
-  var base = (window.parent !== window && document.referrer)
-    ? document.referrer.split('?')[0]
-    : window.location.href.split('?')[0];
+  // Hardcoded Streamlit app base URL — iframe cannot access parent URL reliably.
+  var base = 'https://finance-app-para-commercial.streamlit.app/';
   return base+'?'+p.toString();
 }
 
