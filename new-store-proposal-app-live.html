@@ -255,7 +255,9 @@ var KEYS = [
 // ─── STREAMLIT: base URL for shareable link ───────────────────────────────────
 // This is the Streamlit page that wraps this HTML file.
 // If your page path changes in app.py, update this constant to match.
-var STREAMLIT_BASE = 'https://finance-app-para-commercial.streamlit.app/store_proposal';
+// Root URL — the app is a single-page router, pages don't have their own paths.
+// current_page=store_proposal is added as a query param so app.py knows which page to load.
+var STREAMLIT_BASE = window.STREAMLIT_BASE || 'https://finance-app-para-commercial.streamlit.app';
 
 // ─── MODE TOGGLE ──────────────────────────────────────────────────────────────
 function setMode(mode) {
@@ -315,6 +317,8 @@ function loadFromURL() {
 // ─── SHARE URL ────────────────────────────────────────────────────────────────
 function buildShareURL() {
   var p = new URLSearchParams();
+  // Tell app.py's router which page to load when the link is opened
+  p.set('current_page', 'store_proposal');
   KEYS.forEach(function(k) {
     var el = document.getElementById(k);
     if (el) p.set(k, el.value);
