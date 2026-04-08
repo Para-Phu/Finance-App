@@ -6,7 +6,7 @@ import os
 
 # ── Page config ──────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="App Portfolio",
+    page_title="Finance - Commercial | App Portfolio",
     page_icon=None,
     layout="wide",
     initial_sidebar_state="expanded",
