@@ -41,8 +41,14 @@ NAV = {
     },
 }
 
+# ── Session state — respect share-link routing on first load ─────────────────
+# If the URL contains ?current_page=store_proposal (set by the HTML share link),
+# navigate directly to that page instead of showing the home screen.
 if "current_page" not in st.session_state:
-    st.session_state.current_page = "_home"
+    page_from_url = st.query_params.get("current_page", "_home")
+    # Validate it's a real page key to prevent unexpected behaviour
+    all_keys = [k for pages in NAV.values() for k in pages]
+    st.session_state.current_page = page_from_url if page_from_url in all_keys else "_home"
 
 # ── Sidebar ──────────────────────────────────────────────────────────────────
 with st.sidebar:
@@ -90,14 +96,11 @@ if current == "_home":
         items = list(pages.items())
         n = len(items)
 
-        # Department label
         st.markdown(
             f"""<p style="font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:#bbb;margin:0 0 0.6rem;border-top:1px solid #d8d8d8;padding-top:1.1rem;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;">{dept_label}</p>""",
             unsafe_allow_html=True,
         )
 
-        # Build card grid as a self-contained HTML component
-        # Cards are visual only — real navigation uses st.button below
         cols_css = "1fr " * min(n, 3)
         cards_inner = ""
         for i, (page_key, page_info) in enumerate(items):
@@ -117,8 +120,6 @@ if current == "_home":
         """
         components.html(card_html, height=110 if n <= 3 else 220, scrolling=False)
 
-        # Actual clickable buttons below the visual cards
-        # Styled small and understated so they act as a fallback click target
         btn_cols = st.columns(min(n, 3))
         for i, (page_key, page_info) in enumerate(items):
             with btn_cols[i % 3]:
