@@ -27,14 +27,14 @@ NAV = {
         "_home": {"label": "Overview", "module": None}
     },
     "Finance": {
-        "budget_tool":    {"label": "Budget Tool",        "module": "departments.finance.budget_tool"},
-        "forecast":       {"label": "Forecast",           "module": "departments.finance.forecast"},
+        "budget_tool":    {"label": "Budget Tool (Test)",        "module": "departments.finance.budget_tool"},
+        "forecast":       {"label": "Forecast (Test)",           "module": "departments.finance.forecast"},
     },
     "Operations": {
-        "logistics":      {"label": "Logistics Tracker",  "module": "departments.ops.logistics"},
+        "logistics":      {"label": "Logistics Tracker (Test)",  "module": "departments.ops.logistics"},
     },
     "Marketing": {
-        "dashboard":      {"label": "Campaign Dashboard", "module": "departments.marketing.dashboard"},
+        "dashboard":      {"label": "Campaign Dashboard (Test)", "module": "departments.marketing.dashboard"},
     },
     "Property": {
         "store_proposal": {"label": "New Store Proposal", "module": "departments.property.store_proposal"},
