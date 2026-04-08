@@ -587,6 +587,7 @@ function buildSummaryText() {
 }
 
 function openModal() {
+  try { window.parent.scrollTo({ top: 0, behavior: 'smooth' }); } catch(e) {}
   var r = buildSummaryText();
   document.getElementById('mSum').textContent = r.text;
   document.getElementById('ov').style.display = 'flex';
