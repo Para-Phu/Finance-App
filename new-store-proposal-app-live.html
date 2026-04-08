@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Store Proposal</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f3;color:#1a1a18;font-size:15px;line-height:1.6}
+.page{max-width:900px;margin:0 auto;padding:2rem 1.5rem 4rem}
+h1{font-size:22px;font-weight:500;margin-bottom:0.25rem}
+h2{font-size:14px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:#888780;margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:0.5px solid #d3d1c7}
+.sub{font-size:13px;color:#888780;margin-bottom:2rem}
+.card{background:#fff;border:0.5px solid #d3d1c7;border-radius:12px;padding:1.5rem;margin-bottom:1.25rem}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
+.g4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0.75rem}
+.field{display:flex;flex-direction:column;gap:5px}
+label{font-size:12px;color:#5f5e5a;font-weight:500}
+input,select,textarea{border:0.5px solid #d3d1c7;border-radius:8px;font-size:14px;background:#fff;color:#1a1a18;outline:none;width:100%;font-family:inherit}
+input,select{height:36px;padding:0 10px}
+textarea{padding:8px 10px;resize:none}
+input:focus,select:focus,textarea:focus{border-color:#888780}
+input[type=number]{-moz-appearance:textfield}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}
+.pfx{position:relative}
+.pfx input{padding-left:26px}
+.pfx .s{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:13px;color:#888780;pointer-events:none}
+.sfx{position:relative}
+.sfx input{padding-right:30px}
+.sfx .s{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:13px;color:#888780;pointer-events:none}
+.lr{display:flex;align-items:center;gap:5px}
+.tip{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;background:#d3d1c7;color:#5f5e5a;font-size:9px;font-weight:600;cursor:default;flex-shrink:0;position:relative}
+.tip:hover .tb{display:block}
+.tb{display:none;position:absolute;left:50%;bottom:calc(100% + 6px);transform:translateX(-50%);background:#2c2c2a;color:#f1efe8;font-size:12px;font-weight:400;line-height:1.5;padding:7px 10px;border-radius:7px;width:220px;white-space:normal;z-index:100;pointer-events:none}
+.tb::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#2c2c2a}
+.btnP{display:block;width:100%;height:44px;background:#1a1a18;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:500;cursor:pointer;transition:opacity .15s;margin-top:1rem}
+.btnP:hover{opacity:.85}
+.btnP:disabled{opacity:.45;cursor:not-allowed}
+.btnS{display:block;width:100%;height:44px;background:#fff;color:#1a1a18;border:0.5px solid #d3d1c7;border-radius:10px;font-size:15px;font-weight:500;cursor:pointer;transition:background .15s;margin-top:.75rem}
+.btnS:hover{background:#f5f5f3}
+.btnO{height:44px;padding:0 1.25rem;background:#fff;color:#1a1a18;border:0.5px solid #d3d1c7;border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap}
+.btnO:hover{background:#f5f5f3}
+#results{display:none;margin-top:1.5rem}
+.vbar{border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:1rem}
+.mc{background:#f5f5f3;border-radius:8px;padding:.85rem 1rem}
+.mc .ml{font-size:11px;color:#888780;font-weight:500;text-transform:uppercase;letter-spacing:.05em}
+.mc .mv{font-size:22px;font-weight:500;margin-top:2px}
+.mc .mh{font-size:11px;color:#888780;margin-top:3px}
+.bdg{display:inline-block;font-size:10px;font-weight:500;padding:2px 7px;border-radius:6px;margin-top:5px}
+.bdg.p{background:#eaf3de;color:#3b6d11}
+.bdg.f{background:#fcebeb;color:#a32d2d}
+.pr{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:0.5px solid #f1efe8;font-size:14px}
+.pr:last-child{border-bottom:none}
+.pr.tot{font-weight:500;border-top:1px solid #d3d1c7;margin-top:4px;padding-top:8px}
+.pct{font-size:12px;color:#888780;margin-left:8px}
+.st{width:100%;font-size:13px;border-collapse:collapse}
+.st th{text-align:left;font-size:11px;font-weight:500;color:#888780;text-transform:uppercase;letter-spacing:.05em;padding:6px 8px;border-bottom:0.5px solid #d3d1c7}
+.st td{padding:7px 8px;border-bottom:0.5px solid #f1efe8}
+.st tr.base td{font-weight:500;background:#f5f5f3}
+.st tr:last-child td{border-bottom:none}
+.pos{color:#3b6d11}.neg{color:#a32d2d}
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:flex-start;justify-content:center;padding:5vh 1rem 2rem;overflow-y:auto}
+.mo{background:#fff;border-radius:14px;padding:2rem;width:min(540px,100%);margin:0 auto}
+@media(max-width:600px){.g3,.g4{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div style="margin-bottom:2rem">
+  <h1>New Store – Directional Assessment</h1>
+  <p class="sub">Quick-read view for business leaders. Finance will run the detailed model after this screen-pass.</p>
+</div>
+
+<div class="card">
+  <h2>Store details</h2>
+  <div class="g3">
+    <div class="field"><label>Store name</label><input type="text" id="storeName" value="Lismore"></div>
+    <div class="field"><label>Format</label><select id="format"><option>Standard</option><option>Premium</option></select></div>
+    <div class="field"><label>State</label><select id="state"><option>VIC</option><option>NSW</option><option>QLD</option><option>WA</option><option>SA</option><option>TAS</option><option>ACT</option><option>NT</option></select></div>
+    <div class="field"><label>Location type</label><select id="locType"><option value="Strip / High St">Strip / High St</option><option value="Shopping Centre">Shopping Centre</option></select></div>
+    <div class="field"><label>Shop size (m&#178;)</label><input type="number" id="shopSize" value="250"></div>
+    <div class="field"><label>Lease term (years)</label><input type="number" id="leaseTerm" value="10"></div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Revenue &amp; margins</h2>
+  <div class="g3">
+    <div class="field"><label>Stabilised net sales (excl. GST)</label><div class="pfx"><span class="s">$</span><input type="number" id="sales" value="4000000"></div></div>
+    <div class="field"><label>Gross profit margin</label><div class="sfx"><input type="number" id="gpPct" value="28" step="0.5"><span class="s">%</span></div></div>
+    <div class="field">
+      <div class="lr"><label>Year 1 ramp (% of stabilised)</label><span class="tip">?<span class="tb">Stores typically trade below full run-rate in year one. 85% means Year 1 revenue is modelled at 85% of the stabilised sales forecast, reflecting a ramp-up period as the store builds its customer base.</span></span></div>
+      <div class="sfx"><input type="number" id="rampPct" value="85" step="5"><span class="s">%</span></div>
+    </div>
+    <div class="field"><label>Annual sales growth</label><div class="sfx"><input type="number" id="salesGrowth" value="5" step="0.5"><span class="s">%</span></div></div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Occupancy costs</h2>
+  <div class="g3">
+    <div class="field"><label>Base rent (pa)</label><div class="pfx"><span class="s">$</span><input type="number" id="baseRent" value="200000"></div></div>
+    <div class="field">
+      <div class="lr"><label>Outgoings + levies (pa)</label><span class="tip">?<span class="tb">Includes council rates, water, building insurance, property management fees, and any shopping centre promo or marketing levy. Counted in total occupancy cost alongside base rent.</span></span></div>
+      <div class="pfx"><span class="s">$</span><input type="number" id="outgoings" value="12000"></div>
+    </div>
+    <div class="field">
+      <div class="lr"><label>Rent relief (enter positive)</label><span class="tip">?<span class="tb">A landlord-negotiated reduction to base rent, treated as a permanent discount. Enter the annual dollar value as a positive number — it is deducted from base rent automatically.</span></span></div>
+      <div class="pfx"><span class="s">$</span><input type="number" id="rentRelief" value="50000"></div>
+    </div>
+    <div class="field"><label>Annual rent escalation</label><div class="sfx"><input type="number" id="rentEsc" value="3" step="0.5"><span class="s">%</span></div></div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Operating expenses</h2>
+  <div class="g3">
+    <div class="field"><label>Wages &amp; salaries (% of sales)</label><div class="sfx"><input type="number" id="wagesPct" value="8" step="0.5"><span class="s">%</span></div></div>
+    <div class="field"><label>Gen &amp; admin (% of sales)</label><div class="sfx"><input type="number" id="gaPct" value="2" step="0.5"><span class="s">%</span></div></div>
+    <div class="field"><label>Marketing (% of sales)</label><div class="sfx"><input type="number" id="mktPct" value="0.5" step="0.25"><span class="s">%</span></div></div>
+    <div class="field"><label>Other opex (% of sales)</label><div class="sfx"><input type="number" id="otherPct" value="1" step="0.5"><span class="s">%</span></div></div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Capital &amp; investment</h2>
+  <div class="g3">
+    <div class="field"><label>Gross fitout cost</label><div class="pfx"><span class="s">$</span><input type="number" id="grossFitout" value="1000000"></div></div>
+    <div class="field"><label>Landlord contribution</label><div class="pfx"><span class="s">$</span><input type="number" id="landlordContrib" value="250000"></div></div>
+    <div class="field">
+      <div class="lr"><label>Makegood provision</label><span class="tip">?<span class="tb">The estimated cost to restore the premises to its original condition at lease end, as required by most commercial leases. Included in total net investment for payback and IRR purposes.</span></span></div>
+      <div class="pfx"><span class="s">$</span><input type="number" id="makegood" value="50000"></div>
+    </div>
+    <div class="field">
+      <div class="lr"><label>Opening stock (cost value)</label><span class="tip">?<span class="tb">The cost value of inventory needed to open and trade. Included in total net investment — it is working capital and technically recoverable at lease end if the store closes.</span></span></div>
+      <div class="pfx"><span class="s">$</span><input type="number" id="openingStock" value="384615"></div>
+    </div>
+    <div class="field">
+      <div class="lr"><label>WACC</label><span class="tip">?<span class="tb">Weighted Average Cost of Capital — the minimum return rate used to discount future cash flows when calculating NPV. Ask your finance team for the approved company rate.</span></span></div>
+      <div class="sfx"><input type="number" id="wacc" value="12" step="0.5"><span class="s">%</span></div>
+    </div>
+  </div>
+</div>
+
+<button class="btnP" id="runBtn" onclick="runAnalysis()">Run directional assessment</button>
+
+<div id="results">
+  <div id="vbar" class="vbar" style="background:#eaf3de;border:0.5px solid #97c459">
+    <div id="vicon" style="font-size:22px">&#10003;</div>
+    <div><div id="vtitle" style="font-size:16px;font-weight:500;color:#3b6d11">All hurdles passed</div>
+    <div id="vsub" style="font-size:13px;margin-top:2px;color:#639922">Directionally viable. Send to finance for detailed modelling.</div></div>
+  </div>
+
+  <div class="card"><h2>Key metrics</h2><div class="g4" id="mGrid"></div></div>
+  <div class="card"><h2>Stabilised year P&amp;L (summary)</h2><div id="plDiv"></div></div>
+  <div class="card"><h2>Sensitivity – sales scenarios</h2><div id="sensDiv"></div></div>
+
+  <button class="btnS" onclick="openModal()">Share / export this proposal</button>
+</div>
+
+</div>
+
+<div id="ov" class="ov" onclick="if(event.target===this)closeModal()">
+  <div class="mo">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.25rem">
+      <div>
+        <div style="font-size:16px;font-weight:500">Share or export proposal</div>
+        <div style="font-size:13px;color:#888780;margin-top:3px">Review the summary below before sending.</div>
+      </div>
+      <button onclick="closeModal()" style="background:none;border:none;font-size:22px;color:#888780;cursor:pointer;padding:0 0 0 16px;line-height:1">&#215;</button>
+    </div>
+    <div id="mSum" style="background:#f5f5f3;border-radius:10px;padding:1rem;font-size:12px;line-height:1.75;margin-bottom:1.25rem;white-space:pre;font-family:ui-monospace,monospace;color:#2c2c2a;overflow-x:auto"></div>
+    <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:.75rem">
+      <label style="font-size:12px;color:#5f5e5a;font-weight:500">Recipient email</label>
+      <input type="email" id="toEmail" placeholder="e.g. ceo@company.com">
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:1.25rem">
+      <label style="font-size:12px;color:#5f5e5a;font-weight:500">Note (optional)</label>
+      <textarea id="note" rows="2" placeholder="Add a note for the recipient…"></textarea>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btnP" style="flex:1;margin-top:0;display:block" onclick="sendEmail()">Open in email client</button>
+      <button id="clBtn" class="btnO" onclick="copyLink()">Copy shareable link</button>
+    </div>
+    <p style="font-size:12px;color:#888780;margin-top:10px">The shareable link opens this tool with all inputs pre-filled — the recipient can adjust and re-run the numbers themselves.</p>
+  </div>
+</div>
+
+<script>
+var KEYS=['storeName','format','state','locType','shopSize','leaseTerm',
+  'sales','gpPct','rampPct','salesGrowth','baseRent','outgoings','rentRelief','rentEsc',
+  'wagesPct','gaPct','mktPct','otherPct','grossFitout','landlordContrib','makegood','openingStock','wacc'];
+
+function fmtM(v){return '$'+Math.round(v).toLocaleString('en-AU')}
+function fmtP(v){return (v*100).toFixed(1)+'%'}
+
+function getInputs(){
+  var o={};
+  KEYS.forEach(function(k){
+    var el=document.getElementById(k);
+    o[k]=(el.type==='number')?+el.value:el.value;
+  });
+  return o;
+}
+
+function loadFromURL(){
+  var p=new URLSearchParams(window.location.search);
+  KEYS.forEach(function(k){
+    if(p.has(k)){var el=document.getElementById(k);if(el)el.value=p.get(k);}
+  });
+}
+
+function buildShareURL(){
+  var p=new URLSearchParams();
+  KEYS.forEach(function(k){var el=document.getElementById(k);if(el)p.set(k,el.value);});
+  return window.location.href.split('?')[0]+'?'+p.toString();
+}
+
+function calcIRR(cfs){
+  var r=0.2;
+  for(var i=0;i<200;i++){
+    var n=0,d=0;
+    cfs.forEach(function(c,t){n+=c/Math.pow(1+r,t);d-=t*c/Math.pow(1+r,t+1);});
+    if(Math.abs(d)<1e-10)break;
+    var r2=r-n/d;
+    if(Math.abs(r2-r)<1e-8){r=r2;break;}
+    r=r2;
+  }
+  return r;
+}
+
+function calcNPV(cfs,w){return cfs.reduce(function(s,c,t){return s+c/Math.pow(1+w,t);},0);}
+
+function calcMetrics(inp){
+  var grossRent=inp.baseRent+inp.outgoings-inp.rentRelief;
+  var gp=inp.sales*inp.gpPct/100;
+  var wages=inp.sales*inp.wagesPct/100;
+  var ga=inp.sales*inp.gaPct/100;
+  var mkt=inp.sales*inp.mktPct/100;
+  var other=inp.sales*inp.otherPct/100;
+  var ebitda=gp-grossRent-wages-ga-mkt-other;
+  var netFit=inp.grossFitout-inp.landlordContrib;
+  var totalInv=netFit+inp.openingStock+inp.makegood;
+
+  var cfs=[-totalInv];
+  cfs.push(ebitda*(inp.rampPct/100)*0.9);
+  for(var y=2;y<=inp.leaseTerm;y++){
+    var rY=grossRent*Math.pow(1+inp.rentEsc/100,y-1);
+    var eY=ebitda*Math.pow(1+inp.salesGrowth/100,y-1)-(rY-grossRent);
+    cfs.push(Math.max(eY,0));
+  }
+  cfs[cfs.length-1]-=totalInv*0.042;
+
+  var cum=-totalInv,payback=null;
+  for(var i=1;i<cfs.length;i++){
+    var prev=cum;cum+=cfs[i];
+    if(cum>=0&&payback===null)payback=(i-1)+(-prev/cfs[i]);
+  }
+  if(payback===null)payback=99;
+
+  return{gp,grossRent,wages,ga,mkt,other,ebitda,
+    ebitdaM:ebitda/inp.sales,
+    netFit,totalInv,payback,
+    irr:calcIRR(cfs),
+    npv:calcNPV(cfs,inp.wacc/100),
+    occPct:grossRent/inp.sales,
+    wagesPct:wages/inp.sales,
+    gpM:inp.gpPct/100,
+    sales:inp.sales};
+}
+
+function getChecks(m){
+  return{
+    ebitdaM:m.ebitdaM>=0.10,
+    payback:m.payback<=2.5,
+    irr:m.irr>=0.20,
+    npv:m.npv>=0,
+    occPct:m.occPct<=0.18,
+    wagesPct:m.wagesPct<=0.22,
+    gpM:m.gpM>=0.26
+  };
+}
+
+function runAnalysis(){
+  var btn=document.getElementById('runBtn');
+  btn.disabled=true;btn.textContent='Calculating...';
+
+  var inp=getInputs();
+  var m=calcMetrics(inp);
+  var ck=getChecks(m);
+  var passed=Object.values(ck).filter(Boolean).length;
+  var total=Object.keys(ck).length;
+  var allPass=passed===total;
+  var majorFail=!ck.payback||!ck.irr||!ck.npv||!ck.ebitdaM;
+
+  document.getElementById('results').style.display='block';
+  btn.disabled=false;btn.textContent='Re-run assessment';
+
+  var vbar=document.getElementById('vbar');
+  if(allPass){vbar.style.background='#eaf3de';vbar.style.border='0.5px solid #97c459';}
+  else if(majorFail){vbar.style.background='#fcebeb';vbar.style.border='0.5px solid #f09595';}
+  else{vbar.style.background='#faeeda';vbar.style.border='0.5px solid #ef9f27';}
+
+  var titleC=allPass?'#3b6d11':majorFail?'#a32d2d':'#854f0b';
+  var subC=allPass?'#639922':majorFail?'#e24b4a':'#ba7517';
+  document.getElementById('vtitle').style.color=titleC;
+  document.getElementById('vsub').style.color=subC;
+  document.getElementById('vicon').textContent=allPass?'✓':majorFail?'✗':'!';
+  document.getElementById('vtitle').textContent=allPass?'All hurdles passed':majorFail?(total-passed)+' hurdle(s) failed – review before proceeding':(total-passed)+' minor hurdle(s) flagged';
+  document.getElementById('vsub').textContent=allPass?'Directionally viable. Send to finance for detailed modelling.':majorFail?'This site does not meet investment criteria. Review rent, sales forecast, or capex.':'Core economics are workable but some metrics need attention.';
+
+  var metrics=[
+    {label:'EBITDA margin',val:fmtP(m.ebitdaM),pass:ck.ebitdaM,hurdle:'>= 10%'},
+    {label:'Payback period',val:m.payback>90?'>10 yrs':m.payback.toFixed(1)+' yrs',pass:ck.payback,hurdle:'<= 2.5 yrs'},
+    {label:'IRR',val:fmtP(m.irr),pass:ck.irr,hurdle:'>= 20%'},
+    {label:'NPV',val:fmtM(m.npv),pass:ck.npv,hurdle:'>= $0'},
+    {label:'Occupancy cost',val:fmtP(m.occPct),pass:ck.occPct,hurdle:'<= 18%'},
+    {label:'Wages % sales',val:fmtP(m.wagesPct),pass:ck.wagesPct,hurdle:'<= 22%'},
+    {label:'GP margin',val:fmtP(m.gpM),pass:ck.gpM,hurdle:'>= 26%'},
+    {label:'Total investment',val:fmtM(m.totalInv),pass:null,hurdle:''},
+  ];
+  document.getElementById('mGrid').innerHTML=metrics.map(function(d){
+    return '<div class="mc"><div class="ml">'+d.label+'</div><div class="mv" style="color:'+(d.pass===null?'#1a1a18':d.pass?'#3b6d11':'#a32d2d')+'">'+d.val+'</div>'+(d.pass!==null?'<span class="bdg '+(d.pass?'p':'f')+'">'+(d.pass?'PASS':'FAIL')+'</span>':'')+'<div class="mh">'+d.hurdle+'</div></div>';
+  }).join('');
+
+  document.getElementById('plDiv').innerHTML=
+    '<div class="pr"><span>Net sales (excl. GST)</span><span>'+fmtM(m.sales)+'<span class="pct">100%</span></span></div>'+
+    '<div class="pr"><span>Gross profit</span><span>'+fmtM(m.gp)+'<span class="pct">'+fmtP(m.gp/m.sales)+'</span></span></div>'+
+    '<div class="pr" style="color:#888780;font-size:13px"><span style="padding-left:12px">Gross rent</span><span>('+fmtM(m.grossRent)+')<span class="pct">('+fmtP(m.grossRent/m.sales)+')</span></span></div>'+
+    '<div class="pr" style="color:#888780;font-size:13px"><span style="padding-left:12px">Wages</span><span>('+fmtM(m.wages)+')<span class="pct">('+fmtP(m.wages/m.sales)+')</span></span></div>'+
+    '<div class="pr" style="color:#888780;font-size:13px"><span style="padding-left:12px">G&amp;A / Mkt / Other</span><span>('+fmtM(m.ga+m.mkt+m.other)+')<span class="pct">('+fmtP((m.ga+m.mkt+m.other)/m.sales)+')</span></span></div>'+
+    '<div class="pr tot"><span>EBITDA</span><span>'+fmtM(m.ebitda)+'<span class="pct">'+fmtP(m.ebitdaM)+'</span></span></div>';
+
+  var sens=[-30,-20,-10,0,10,20].map(function(pct){
+    var s=calcMetrics(Object.assign({},inp,{sales:inp.sales*(1+pct/100)}));
+    s.label=pct===0?'Base case':(pct>0?'+':'')+pct+'% on forecast';
+    s.pct=pct;
+    return s;
+  });
+  document.getElementById('sensDiv').innerHTML='<div style="overflow-x:auto"><table class="st"><thead><tr><th>Scenario</th><th>Net sales</th><th>EBITDA</th><th>EBITDA %</th><th>Occ cost %</th><th>Payback</th><th>NPV</th></tr></thead><tbody>'+
+    sens.map(function(s){return '<tr'+(s.pct===0?' class="base"':'')+'><td>'+s.label+'</td><td>'+fmtM(s.sales)+'</td><td class="'+(s.ebitda>=0?'pos':'neg')+'">'+fmtM(s.ebitda)+'</td><td>'+fmtP(s.ebitdaM)+'</td><td>'+fmtP(s.occPct)+'</td><td>'+(s.payback>90?'>10':s.payback.toFixed(1))+' yrs</td><td class="'+(s.npv>=0?'pos':'neg')+'">'+fmtM(s.npv)+'</td></tr>';}).join('')+
+    '</tbody></table></div>';
+
+  document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function buildSummaryText(){
+  var inp=getInputs();
+  var m=calcMetrics(inp);
+  var ck=getChecks(m);
+  var passed=Object.values(ck).filter(Boolean).length;
+  var total=Object.keys(ck).length;
+  var pb=m.payback>90?'>10 yrs':m.payback.toFixed(1)+' yrs';
+  var verdict=passed===total?'ALL HURDLES PASSED':(total-passed)+' HURDLE(S) FAILED';
+  return{inp,m,ck,text:
+'NEW STORE PROPOSAL - DIRECTIONAL ASSESSMENT\n'+
+'============================================\n'+
+'Store:         '+inp.storeName+'\n'+
+'Format:        '+inp.format+'  |  '+inp.state+'  |  '+inp.locType+'\n'+
+'Lease:         '+inp.leaseTerm+' years  |  '+inp.shopSize+' m2\n\n'+
+'METRIC              VALUE      HURDLE\n'+
+'--------------------------------------\n'+
+'EBITDA margin    '+fmtP(m.ebitdaM).padStart(8)+'    >= 10%   '+(ck.ebitdaM?'PASS':'FAIL')+'\n'+
+'Payback          '+pb.padStart(8)+'    <= 2.5yr '+(ck.payback?'PASS':'FAIL')+'\n'+
+'IRR              '+fmtP(m.irr).padStart(8)+'    >= 20%   '+(ck.irr?'PASS':'FAIL')+'\n'+
+'NPV              '+fmtM(m.npv).padStart(8)+'    >= $0    '+(ck.npv?'PASS':'FAIL')+'\n'+
+'Occ cost %       '+fmtP(m.occPct).padStart(8)+'    <= 18%   '+(ck.occPct?'PASS':'FAIL')+'\n'+
+'Wages %          '+fmtP(m.wagesPct).padStart(8)+'    <= 22%   '+(ck.wagesPct?'PASS':'FAIL')+'\n'+
+'GP margin        '+fmtP(m.gpM).padStart(8)+'    >= 26%   '+(ck.gpM?'PASS':'FAIL')+'\n\n'+
+'Stabilised sales:  '+fmtM(m.sales)+'\n'+
+'Total investment:  '+fmtM(m.totalInv)+'\n'+
+'EBITDA:            '+fmtM(m.ebitda)+'\n\n'+
+'VERDICT: '+verdict};
+}
+
+function openModal(){
+  var r=buildSummaryText();
+  document.getElementById('mSum').textContent=r.text;
+  document.getElementById('ov').style.display='flex';
+}
+function closeModal(){document.getElementById('ov').style.display='none';}
+
+function sendEmail(){
+  var r=buildSummaryText();
+  var to=document.getElementById('toEmail').value.trim();
+  var note=document.getElementById('note').value.trim();
+  var url=buildShareURL();
+  var subj=encodeURIComponent('New Store Proposal - '+r.inp.storeName+' (Directional Assessment)');
+  var noteBlock=note?'Note from sender:\n'+note+'\n\n':'';
+  var body=encodeURIComponent(noteBlock+r.text+'\n\n----------------------------------------\nOpen interactive version (inputs pre-filled):\n'+url);
+  window.location.href='mailto:'+to+'?subject='+subj+'&body='+body;
+}
+
+function copyLink(){
+  navigator.clipboard.writeText(buildShareURL()).then(function(){
+    var btn=document.getElementById('clBtn');
+    btn.textContent='Copied!';
+    setTimeout(function(){btn.textContent='Copy shareable link';},2000);
+  });
+}
+
+loadFromURL();
+</script>
+</body>
+</html>
