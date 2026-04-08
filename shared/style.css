@@ -1,160 +1,240 @@
 /* shared/style.css
-   ─────────────────
-   Concept B — Minimal sans (Aesop-inspired)
+   ─────────────────────────────────────────────────────────────────────────────
+   Greyscale minimalist theme — Aesop/editorial inspired
    Injected globally via app.py — applies to every app in the portfolio.
+
+   Palette:
+     bg-main:     #f5f4f2   warm off-white canvas
+     bg-sidebar:  #eceae6   slightly darker warm grey sidebar
+     border:      #d6d3cd   warm mid-grey rules
+     text-primary:#1a1916   near-black
+     text-muted:  #8c8983   warm mid-grey labels
+     text-faint:  #b5b2ac   faint labels / captions
 */
 
-/* ── Global typography ────────────────────────────────────────────────────── */
+/* ── Reset ───────────────────────────────────────────────────────────────── */
 html, body, [class*="css"] {
     font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif !important;
-    letter-spacing: 0.01em;
 }
 
-/* ── Main content area ────────────────────────────────────────────────────── */
+/* ── Main canvas ─────────────────────────────────────────────────────────── */
+.stApp {
+    background-color: #f5f4f2 !important;
+}
+
 .main .block-container {
-    padding-top: 3rem;
-    max-width: 960px;
+    padding-top: 3.5rem;
+    padding-bottom: 4rem;
+    max-width: 920px;
 }
 
-/* ── Typography ───────────────────────────────────────────────────────────── */
-h1 {
-    font-size: 1.1rem !important;
+/* ── Sidebar ─────────────────────────────────────────────────────────────── */
+[data-testid="stSidebar"] {
+    background-color: #eceae6 !important;
+    border-right: 1px solid #d6d3cd !important;
+}
+
+[data-testid="stSidebar"] .stMarkdown p {
+    font-size: 0.65rem !important;
     font-weight: 400 !important;
-    letter-spacing: 0.08em !important;
-    text-transform: uppercase;
+    letter-spacing: 0.16em !important;
+    text-transform: uppercase !important;
+    color: #8c8983 !important;
+    margin: 0 !important;
+}
+
+/* Department section labels */
+[data-testid="stSidebar"] .stMarkdown strong {
+    font-size: 0.6rem !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.18em !important;
+    text-transform: uppercase !important;
+    color: #b5b2ac !important;
+    display: block;
+    padding: 0.9rem 0.75rem 0.2rem;
+}
+
+[data-testid="stSidebar"] .stCaption,
+[data-testid="stSidebar"] [data-testid="stCaptionContainer"] p {
+    font-size: 0.6rem !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    color: #b5b2ac !important;
+}
+
+[data-testid="stSidebar"] hr {
+    border-color: #d6d3cd !important;
+    margin: 0.6rem 0 !important;
+}
+
+/* Sidebar nav buttons — left-aligned, no border, no radius */
+[data-testid="stSidebar"] .stButton > button {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+    color: #5a5855 !important;
+    text-align: left !important;
+    font-size: 0.8rem !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.01em !important;
+    text-transform: none !important;
+    padding: 0.3rem 0.75rem !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: unset !important;
+    justify-content: flex-start !important;
+    transition: color 0.15s !important;
+}
+
+[data-testid="stSidebar"] .stButton > button:hover {
+    background: rgba(0,0,0,0.04) !important;
+    color: #1a1916 !important;
+    opacity: 1 !important;
+}
+
+[data-testid="stSidebar"] .stButton > button[kind="secondary"] {
+    color: #1a1916 !important;
+    background: rgba(0,0,0,0.06) !important;
+}
+
+/* ── Typography ──────────────────────────────────────────────────────────── */
+h1 {
+    font-size: 1.6rem !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.05em !important;
+    text-transform: uppercase !important;
+    color: #1a1916 !important;
+    line-height: 1.2 !important;
 }
 
 h2 {
-    font-size: 0.7rem !important;
+    font-size: 0.62rem !important;
     font-weight: 400 !important;
-    letter-spacing: 0.14em !important;
-    text-transform: uppercase;
-    color: rgba(128, 128, 128, 0.8) !important;
-    margin-top: 2rem !important;
+    letter-spacing: 0.18em !important;
+    text-transform: uppercase !important;
+    color: #b5b2ac !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
 }
 
 h3 {
     font-size: 0.875rem !important;
     font-weight: 400 !important;
     letter-spacing: 0.01em !important;
+    color: #1a1916 !important;
 }
 
 p, .stMarkdown p {
     font-size: 0.875rem;
-    line-height: 1.7;
+    line-height: 1.75;
+    color: #3d3b38;
 }
 
-/* ── Sidebar ──────────────────────────────────────────────────────────────── */
-[data-testid="stSidebar"] {
-    background-color: #0f1117;
-    border-right: none;
-}
-
-[data-testid="stSidebar"] .stMarkdown p,
-[data-testid="stSidebar"] .stMarkdown strong {
-    font-size: 0.7rem !important;
-    letter-spacing: 0.14em !important;
-    text-transform: uppercase !important;
-    color: #444 !important;
-    font-weight: 400 !important;
-}
-
-[data-testid="stSidebar"] .stCaption {
-    color: #333 !important;
-    font-size: 0.7rem !important;
-}
-
-/* Sidebar nav buttons */
-[data-testid="stSidebar"] .stButton > button {
-    background: transparent;
-    border: none;
-    color: #777;
-    text-align: left;
-    font-size: 0.8rem;
-    font-family: inherit;
-    letter-spacing: 0.01em;
-    padding: 0.3rem 0.75rem;
-    border-radius: 0;
-    transition: color 0.15s;
-    width: 100%;
-}
-
-[data-testid="stSidebar"] .stButton > button:hover {
-    background: rgba(255,255,255,0.04);
-    color: #fff;
-}
-
-/* Active page button */
-[data-testid="stSidebar"] .stButton > button[kind="secondary"] {
-    color: #fff;
-    background: rgba(255,255,255,0.07);
-}
-
-/* Sidebar divider */
-[data-testid="stSidebar"] hr {
-    border-color: #1e1e1e !important;
-    margin: 0.75rem 0 !important;
-}
-
-/* ── Cards — override Streamlit's rounded border style ───────────────────── */
-[data-testid="stVerticalBlockBorderWrapper"] {
+/* ── Cards — force sharp corners ─────────────────────────────────────────── */
+[data-testid="stVerticalBlockBorderWrapper"],
+[data-testid="stVerticalBlockBorderWrapper"] > div,
+[data-testid="stVerticalBlockBorderWrapper"] > div > div {
     border-radius: 0 !important;
-    border-color: rgba(128, 128, 128, 0.2) !important;
+    -webkit-border-radius: 0 !important;
+}
+
+[data-testid="stVerticalBlockBorderWrapper"] {
+    border-color: #d6d3cd !important;
+    background-color: #f5f4f2 !important;
     transition: border-color 0.2s;
 }
 
 [data-testid="stVerticalBlockBorderWrapper"]:hover {
-    border-color: rgba(128, 128, 128, 0.5) !important;
+    border-color: #9e9b96 !important;
     box-shadow: none !important;
 }
 
-/* ── Buttons ─────────────────────────────────────────────────────────────── */
-.stButton > button[kind="primary"],
-.stButton > button[kind="secondary"] {
-    border-radius: 0 !important;
-    font-size: 0.7rem !important;
-    font-weight: 400 !important;
-    letter-spacing: 0.1em !important;
-    text-transform: uppercase !important;
-    border: none !important;
+/* ── Buttons — underline link style ─────────────────────────────────────── */
+.stButton > button {
     background: transparent !important;
-    padding: 0 0 1px 0 !important;
-    color: inherit !important;
-    border-bottom: 1px solid currentColor !important;
+    border: none !important;
+    border-radius: 0 !important;
+    border-bottom: 1px solid #1a1916 !important;
+    box-shadow: none !important;
+    color: #1a1916 !important;
+    font-size: 0.65rem !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.14em !important;
+    text-transform: uppercase !important;
+    padding: 0 0 2px 0 !important;
     height: auto !important;
     min-height: unset !important;
+    line-height: 1.4 !important;
+    transition: opacity 0.15s !important;
 }
 
 .stButton > button:hover {
-    opacity: 0.6 !important;
+    opacity: 0.45 !important;
     background: transparent !important;
+    color: #1a1916 !important;
+    border-bottom: 1px solid #1a1916 !important;
 }
 
-/* ── Metric cards ─────────────────────────────────────────────────────────── */
+/* ── Metric cards ────────────────────────────────────────────────────────── */
 [data-testid="stMetric"] {
     background: transparent;
     border-radius: 0;
     padding: 1rem 0;
     border: none;
-    border-top: 1px solid rgba(128,128,128,0.2);
+    border-top: 1px solid #d6d3cd;
 }
 
-/* ── Dataframes ───────────────────────────────────────────────────────────── */
+[data-testid="stMetricLabel"] p {
+    font-size: 0.62rem !important;
+    letter-spacing: 0.14em !important;
+    text-transform: uppercase !important;
+    color: #8c8983 !important;
+}
+
+[data-testid="stMetricValue"] {
+    font-size: 1.5rem !important;
+    font-weight: 400 !important;
+    color: #1a1916 !important;
+}
+
+/* ── Dataframes ──────────────────────────────────────────────────────────── */
 [data-testid="stDataFrame"] {
-    border-radius: 0;
+    border-radius: 0 !important;
     overflow: hidden;
 }
 
-/* ── Dividers ─────────────────────────────────────────────────────────────── */
+/* ── Dividers ────────────────────────────────────────────────────────────── */
 hr {
-    border-color: rgba(128,128,128,0.15) !important;
+    border-color: #d6d3cd !important;
     margin: 1.5rem 0 !important;
 }
 
-/* ── Caption / label text ─────────────────────────────────────────────────── */
-.stCaption, [data-testid="stCaptionContainer"] p {
-    font-size: 0.7rem !important;
-    letter-spacing: 0.1em !important;
+/* ── Captions ────────────────────────────────────────────────────────────── */
+.stCaption,
+[data-testid="stCaptionContainer"] p {
+    font-size: 0.62rem !important;
+    letter-spacing: 0.12em !important;
     text-transform: uppercase !important;
-    color: rgba(128,128,128,0.7) !important;
+    color: #8c8983 !important;
+}
+
+/* ── Inputs ──────────────────────────────────────────────────────────────── */
+.stTextInput input,
+.stSelectbox select,
+.stNumberInput input,
+textarea {
+    border-radius: 0 !important;
+    border-color: #d6d3cd !important;
+    background: #f5f4f2 !important;
+    font-size: 0.875rem !important;
+    color: #1a1916 !important;
+}
+
+/* ── Tabs ────────────────────────────────────────────────────────────────── */
+.stTabs [data-baseweb="tab"] {
+    font-size: 0.65rem !important;
+    letter-spacing: 0.14em !important;
+    text-transform: uppercase !important;
 }
