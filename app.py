@@ -37,6 +37,9 @@ NAV = {
     "📣 Marketing": {
         "dashboard":    {"label": "Campaign Dashboard","module": "departments.marketing.dashboard"},
     },
+    "🏢 Property": {
+    "store_proposal": {"label": "New Store Proposal", "module": "departments.property.store_proposal"},
+    },
 }
 
 # ── Session state defaults ───────────────────────────────────────────────────
