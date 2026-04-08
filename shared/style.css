@@ -1,0 +1,94 @@
+/* shared/style.css
+   ─────────────────
+   Injected globally via app.py — applies to every app in the portfolio.
+   Edit this file to change the look across all apps at once.
+*/
+
+/* ── Sidebar ──────────────────────────────────────────────────────────────── */
+[data-testid="stSidebar"] {
+    background-color: #0f1117;
+}
+
+[data-testid="stSidebar"] .stMarkdown p,
+[data-testid="stSidebar"] .stMarkdown strong,
+[data-testid="stSidebar"] .stCaption {
+    color: #c8cdd8 !important;
+}
+
+/* Sidebar nav buttons */
+[data-testid="stSidebar"] .stButton > button {
+    background: transparent;
+    border: none;
+    color: #c8cdd8;
+    text-align: left;
+    font-size: 0.875rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 6px;
+    transition: background 0.15s, color 0.15s;
+}
+
+[data-testid="stSidebar"] .stButton > button:hover {
+    background: rgba(255,255,255,0.07);
+    color: #ffffff;
+}
+
+/* Active page button (starts with ▶) */
+[data-testid="stSidebar"] .stButton > button[kind="secondary"]:first-line {
+    color: #ffffff;
+}
+
+/* ── Main content area ────────────────────────────────────────────────────── */
+.main .block-container {
+    padding-top: 2rem;
+    max-width: 1100px;
+}
+
+/* ── Typography ───────────────────────────────────────────────────────────── */
+h1 {
+    font-size: 1.75rem !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.02em;
+}
+
+h2, h3 {
+    font-weight: 600 !important;
+    letter-spacing: -0.01em;
+}
+
+/* ── Cards (st.container with border=True) ────────────────────────────────── */
+[data-testid="stVerticalBlockBorderWrapper"] {
+    border-radius: 10px !important;
+    border-color: rgba(128, 128, 128, 0.2) !important;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+[data-testid="stVerticalBlockBorderWrapper"]:hover {
+    border-color: rgba(128, 128, 128, 0.45) !important;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+/* ── Buttons ─────────────────────────────────────────────────────────────── */
+.stButton > button[kind="primary"] {
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+/* ── Metric cards ─────────────────────────────────────────────────────────── */
+[data-testid="stMetric"] {
+    background: rgba(128,128,128,0.05);
+    border-radius: 10px;
+    padding: 1rem;
+    border: 1px solid rgba(128,128,128,0.12);
+}
+
+/* ── Dataframes ───────────────────────────────────────────────────────────── */
+[data-testid="stDataFrame"] {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* ── Dividers ─────────────────────────────────────────────────────────────── */
+hr {
+    border-color: rgba(128,128,128,0.15) !important;
+    margin: 1.25rem 0 !important;
+}
