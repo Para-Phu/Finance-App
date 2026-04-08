@@ -74,7 +74,7 @@ if current == "_home":
     st.markdown(
         """
         <div style="border-top:1px solid #1a1a1a;padding-top:1.75rem;margin-bottom:2.75rem;">
-            <p style="font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:#bbb;margin:0 0 0.5rem;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;">App Portfolio</p>
+            <p style="font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:#bbb;margin:0 0 0.5rem;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;">Finance - Commercial | App Portfolio</p>
             <p style="font-size:1.5rem;font-weight:400;letter-spacing:0.06em;text-transform:uppercase;color:#1a1a1a;margin:0 0 0.65rem;line-height:1.15;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;">Internal Tools</p>
             <p style="font-size:0.82rem;color:#888;margin:0;max-width:400px;line-height:1.75;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;">A collection of tools for finance, operations, marketing, and property.</p>
         </div>
