@@ -222,7 +222,7 @@ function buildShareURL(){
   var p=new URLSearchParams();
   KEYS.forEach(function(k){var el=document.getElementById(k);if(el)p.set(k,el.value);});
   // Hardcoded Streamlit app base URL — iframe cannot access parent URL reliably.
-  var base = 'https://finance-app-para-commercial.streamlit.app/';
+  var base = 'https://finance-app-para-commercial.streamlit.app/new-store-proposal-app-live.html';
   return base+'?'+p.toString();
 }
 
